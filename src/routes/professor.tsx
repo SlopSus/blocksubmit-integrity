@@ -1,0 +1,1 @@
+import { createFileRoute,Outlet } from "@tanstack/react-router";import { Protected } from "@/components/blocksubmit/protected";export const Route=createFileRoute("/professor")({component:Page});function Page(){return <Protected role="professor"><Outlet/></Protected>}

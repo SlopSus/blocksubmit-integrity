@@ -1,0 +1,9 @@
+import type { Activity, Assignment, AuthSession, CreateAssignmentInput, LoginCredentials, Submission, SubmissionStep, User, UserRole } from "@/types/domain";
+import { serviceConfig } from "./config";
+import { apiRequest } from "./api";
+import { mockRepository } from "./mock/repository";
+export const authService={ login:(input:LoginCredentials):Promise<AuthSession>=>serviceConfig.useMock?mockRepository.login(input.email,input.password):apiRequest<AuthSession>("/auth/login",{method:"POST",body:JSON.stringify(input)}), me:(role?:UserRole):Promise<User>=>serviceConfig.useMock?mockRepository.me(role):apiRequest<User>("/auth/me") };
+export const assignmentService={ list:():Promise<Assignment[]>=>serviceConfig.useMock?mockRepository.getAssignments():apiRequest<Assignment[]>("/assignments"), create:(input:CreateAssignmentInput):Promise<Assignment>=>serviceConfig.useMock?mockRepository.createAssignment(input):apiRequest<Assignment>("/assignments",{method:"POST",body:JSON.stringify(input)}) };
+export const submissionService={ list:(role?:UserRole):Promise<Submission[]>=>serviceConfig.useMock?mockRepository.getSubmissions(role):apiRequest<Submission[]>("/submissions"), submit:(assignmentId:string,file:File,onStep:(s:SubmissionStep)=>void):Promise<Submission>=>{ if(serviceConfig.useMock)return mockRepository.submit(assignmentId,file,onStep); const body=new FormData();body.append("assignmentId",assignmentId);body.append("document",file);onStep("uploading");return apiRequest<Submission>("/submissions",{method:"POST",body}); } };
+export const activityService={ list:():Promise<Activity[]>=>serviceConfig.useMock?mockRepository.getActivities():Promise.resolve([]) };
+export const verificationService={ verify:(id:string):Promise<Submission>=>{ if(serviceConfig.useMock)return mockRepository.verify(id); return Promise.reject(new Error("Verification endpoint is not configured.")); } };
