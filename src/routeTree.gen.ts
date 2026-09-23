@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProfessorRouteImport } from './routes/professor'
 import { Route as StudentRouteImport } from './routes/student'
+import { Route as ProfessorIndexRouteImport } from './routes/professor.index'
 import { Route as ProfessorActivityRouteImport } from './routes/professor.activity'
 import { Route as ProfessorAssignmentsRouteImport } from './routes/professor.assignments'
 import { Route as ProfessorSettingsRouteImport } from './routes/professor.settings'
 import { Route as ProfessorSubmissionsRouteImport } from './routes/professor.submissions'
 import { Route as ProfessorVerificationRouteImport } from './routes/professor.verification'
+import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentActivityRouteImport } from './routes/student.activity'
 import { Route as StudentAssignmentsRouteImport } from './routes/student.assignments'
 import { Route as StudentSettingsRouteImport } from './routes/student.settings'
@@ -48,6 +50,11 @@ const StudentRoute = StudentRouteImport.update({
   path: '/student',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfessorIndexRoute = ProfessorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfessorRoute,
+} as any)
 const ProfessorActivityRoute = ProfessorActivityRouteImport.update({
   id: '/activity',
   path: '/activity',
@@ -72,6 +79,11 @@ const ProfessorVerificationRoute = ProfessorVerificationRouteImport.update({
   id: '/verification',
   path: '/verification',
   getParentRoute: () => ProfessorRoute,
+} as any)
+const StudentIndexRoute = StudentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudentRoute,
 } as any)
 const StudentActivityRoute = StudentActivityRouteImport.update({
   id: '/activity',
@@ -134,6 +146,8 @@ export interface FileRoutesByFullPath {
   '/student/assignments': typeof StudentAssignmentsRouteWithChildren
   '/student/settings': typeof StudentSettingsRoute
   '/student/submissions': typeof StudentSubmissionsRouteWithChildren
+  '/professor/': typeof ProfessorIndexRoute
+  '/student/': typeof StudentIndexRoute
   '/professor/assignments/$id': typeof ProfessorAssignmentsIdRoute
   '/professor/submissions/$id': typeof ProfessorSubmissionsIdRoute
   '/student/assignments/$id': typeof StudentAssignmentsIdRoute
@@ -143,8 +157,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/professor': typeof ProfessorRouteWithChildren
-  '/student': typeof StudentRouteWithChildren
   '/professor/activity': typeof ProfessorActivityRoute
   '/professor/assignments': typeof ProfessorAssignmentsRouteWithChildren
   '/professor/settings': typeof ProfessorSettingsRoute
@@ -154,6 +166,8 @@ export interface FileRoutesByTo {
   '/student/assignments': typeof StudentAssignmentsRouteWithChildren
   '/student/settings': typeof StudentSettingsRoute
   '/student/submissions': typeof StudentSubmissionsRouteWithChildren
+  '/professor': typeof ProfessorIndexRoute
+  '/student': typeof StudentIndexRoute
   '/professor/assignments/$id': typeof ProfessorAssignmentsIdRoute
   '/professor/submissions/$id': typeof ProfessorSubmissionsIdRoute
   '/student/assignments/$id': typeof StudentAssignmentsIdRoute
@@ -175,6 +189,8 @@ export interface FileRoutesById {
   '/student/assignments': typeof StudentAssignmentsRouteWithChildren
   '/student/settings': typeof StudentSettingsRoute
   '/student/submissions': typeof StudentSubmissionsRouteWithChildren
+  '/professor/': typeof ProfessorIndexRoute
+  '/student/': typeof StudentIndexRoute
   '/professor/assignments/$id': typeof ProfessorAssignmentsIdRoute
   '/professor/submissions/$id': typeof ProfessorSubmissionsIdRoute
   '/student/assignments/$id': typeof StudentAssignmentsIdRoute
@@ -197,6 +213,8 @@ export interface FileRouteTypes {
     | '/student/assignments'
     | '/student/settings'
     | '/student/submissions'
+    | '/professor/'
+    | '/student/'
     | '/professor/assignments/$id'
     | '/professor/submissions/$id'
     | '/student/assignments/$id'
@@ -206,8 +224,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
-    | '/professor'
-    | '/student'
     | '/professor/activity'
     | '/professor/assignments'
     | '/professor/settings'
@@ -217,6 +233,8 @@ export interface FileRouteTypes {
     | '/student/assignments'
     | '/student/settings'
     | '/student/submissions'
+    | '/professor'
+    | '/student'
     | '/professor/assignments/$id'
     | '/professor/submissions/$id'
     | '/student/assignments/$id'
@@ -237,6 +255,8 @@ export interface FileRouteTypes {
     | '/student/assignments'
     | '/student/settings'
     | '/student/submissions'
+    | '/professor/'
+    | '/student/'
     | '/professor/assignments/$id'
     | '/professor/submissions/$id'
     | '/student/assignments/$id'
@@ -281,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/professor/': {
+      id: '/professor/'
+      path: '/'
+      fullPath: '/professor/'
+      preLoaderRoute: typeof ProfessorIndexRouteImport
+      parentRoute: typeof ProfessorRoute
+    }
     '/professor/activity': {
       id: '/professor/activity'
       path: '/activity'
@@ -315,6 +342,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/professor/verification'
       preLoaderRoute: typeof ProfessorVerificationRouteImport
       parentRoute: typeof ProfessorRoute
+    }
+    '/student/': {
+      id: '/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof StudentRoute
     }
     '/student/activity': {
       id: '/student/activity'
@@ -410,6 +444,7 @@ interface ProfessorRouteChildren {
   ProfessorSettingsRoute: typeof ProfessorSettingsRoute
   ProfessorSubmissionsRoute: typeof ProfessorSubmissionsRouteWithChildren
   ProfessorVerificationRoute: typeof ProfessorVerificationRoute
+  ProfessorIndexRoute: typeof ProfessorIndexRoute
 }
 
 const ProfessorRouteChildren: ProfessorRouteChildren = {
@@ -418,6 +453,7 @@ const ProfessorRouteChildren: ProfessorRouteChildren = {
   ProfessorSettingsRoute: ProfessorSettingsRoute,
   ProfessorSubmissionsRoute: ProfessorSubmissionsRouteWithChildren,
   ProfessorVerificationRoute: ProfessorVerificationRoute,
+  ProfessorIndexRoute: ProfessorIndexRoute,
 }
 
 const ProfessorRouteWithChildren = ProfessorRoute._addFileChildren(
@@ -451,6 +487,7 @@ interface StudentRouteChildren {
   StudentAssignmentsRoute: typeof StudentAssignmentsRouteWithChildren
   StudentSettingsRoute: typeof StudentSettingsRoute
   StudentSubmissionsRoute: typeof StudentSubmissionsRouteWithChildren
+  StudentIndexRoute: typeof StudentIndexRoute
   StudentSubmitAssignmentIdRoute: typeof StudentSubmitAssignmentIdRoute
 }
 
@@ -459,6 +496,7 @@ const StudentRouteChildren: StudentRouteChildren = {
   StudentAssignmentsRoute: StudentAssignmentsRouteWithChildren,
   StudentSettingsRoute: StudentSettingsRoute,
   StudentSubmissionsRoute: StudentSubmissionsRouteWithChildren,
+  StudentIndexRoute: StudentIndexRoute,
   StudentSubmitAssignmentIdRoute: StudentSubmitAssignmentIdRoute,
 }
 
