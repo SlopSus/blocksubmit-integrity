@@ -1,4 +1,8 @@
 # BlockSubmit
+Blockchain-Based Academic Assignment Submission & Integrity Verification System
+
+University academic project focused on secure assignment submission, document integrity verification, and blockchain-based proof of authenticity.
+
 
 ## Blockchain-Based Academic Assignment Submission & Integrity Verification System
 
@@ -14,12 +18,15 @@ BlockSubmit follows a hybrid architecture:
 
 ```text
 Student / Professor
-        ↓
-React Frontend
-        ↓
-Node.js + Express API
-        ↓
-MongoDB
+        │
+        ▼
+ React Frontend
+        │
+        ▼
+ Node.js + Express
+        │
+        ▼
+      MongoDB
 ```
 
 For document integrity:
@@ -341,3 +348,9 @@ BLOCKCHAIN PROOF
 ```
 
 BlockSubmit is developed as a university academic project.
+
+## Academic Notice
+
+This project is developed for educational and academic purposes.
+
+The blockchain component is used for document integrity verification and tamper detection through cryptographic hashing and smart contract records.
