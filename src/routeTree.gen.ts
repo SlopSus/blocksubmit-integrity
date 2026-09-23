@@ -10,33 +10,245 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfessorRouteImport } from './routes/professor'
+import { Route as StudentRouteImport } from './routes/student'
+import { Route as ProfessorActivityRouteImport } from './routes/professor.activity'
+import { Route as ProfessorAssignmentsRouteImport } from './routes/professor.assignments'
+import { Route as ProfessorSettingsRouteImport } from './routes/professor.settings'
+import { Route as ProfessorSubmissionsRouteImport } from './routes/professor.submissions'
+import { Route as ProfessorVerificationRouteImport } from './routes/professor.verification'
+import { Route as StudentActivityRouteImport } from './routes/student.activity'
+import { Route as StudentAssignmentsRouteImport } from './routes/student.assignments'
+import { Route as StudentSettingsRouteImport } from './routes/student.settings'
+import { Route as StudentSubmissionsRouteImport } from './routes/student.submissions'
+import { Route as ProfessorAssignmentsIdRouteImport } from './routes/professor.assignments.$id'
+import { Route as ProfessorSubmissionsIdRouteImport } from './routes/professor.submissions.$id'
+import { Route as StudentAssignmentsIdRouteImport } from './routes/student.assignments.$id'
+import { Route as StudentSubmissionsIdRouteImport } from './routes/student.submissions.$id'
+import { Route as StudentSubmitAssignmentIdRouteImport } from './routes/student.submit.$assignmentId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfessorRoute = ProfessorRouteImport.update({
+  id: '/professor',
+  path: '/professor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentRoute = StudentRouteImport.update({
+  id: '/student',
+  path: '/student',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfessorActivityRoute = ProfessorActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => ProfessorRoute,
+} as any)
+const ProfessorAssignmentsRoute = ProfessorAssignmentsRouteImport.update({
+  id: '/assignments',
+  path: '/assignments',
+  getParentRoute: () => ProfessorRoute,
+} as any)
+const ProfessorSettingsRoute = ProfessorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ProfessorRoute,
+} as any)
+const ProfessorSubmissionsRoute = ProfessorSubmissionsRouteImport.update({
+  id: '/submissions',
+  path: '/submissions',
+  getParentRoute: () => ProfessorRoute,
+} as any)
+const ProfessorVerificationRoute = ProfessorVerificationRouteImport.update({
+  id: '/verification',
+  path: '/verification',
+  getParentRoute: () => ProfessorRoute,
+} as any)
+const StudentActivityRoute = StudentActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentAssignmentsRoute = StudentAssignmentsRouteImport.update({
+  id: '/assignments',
+  path: '/assignments',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentSettingsRoute = StudentSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentSubmissionsRoute = StudentSubmissionsRouteImport.update({
+  id: '/submissions',
+  path: '/submissions',
+  getParentRoute: () => StudentRoute,
+} as any)
+const ProfessorAssignmentsIdRoute = ProfessorAssignmentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ProfessorAssignmentsRoute,
+} as any)
+const ProfessorSubmissionsIdRoute = ProfessorSubmissionsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ProfessorSubmissionsRoute,
+} as any)
+const StudentAssignmentsIdRoute = StudentAssignmentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => StudentAssignmentsRoute,
+} as any)
+const StudentSubmissionsIdRoute = StudentSubmissionsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => StudentSubmissionsRoute,
+} as any)
+const StudentSubmitAssignmentIdRoute =
+  StudentSubmitAssignmentIdRouteImport.update({
+    id: '/submit/$assignmentId',
+    path: '/submit/$assignmentId',
+    getParentRoute: () => StudentRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/professor': typeof ProfessorRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/professor/activity': typeof ProfessorActivityRoute
+  '/professor/assignments': typeof ProfessorAssignmentsRouteWithChildren
+  '/professor/settings': typeof ProfessorSettingsRoute
+  '/professor/submissions': typeof ProfessorSubmissionsRouteWithChildren
+  '/professor/verification': typeof ProfessorVerificationRoute
+  '/student/activity': typeof StudentActivityRoute
+  '/student/assignments': typeof StudentAssignmentsRouteWithChildren
+  '/student/settings': typeof StudentSettingsRoute
+  '/student/submissions': typeof StudentSubmissionsRouteWithChildren
+  '/professor/assignments/$id': typeof ProfessorAssignmentsIdRoute
+  '/professor/submissions/$id': typeof ProfessorSubmissionsIdRoute
+  '/student/assignments/$id': typeof StudentAssignmentsIdRoute
+  '/student/submissions/$id': typeof StudentSubmissionsIdRoute
+  '/student/submit/$assignmentId': typeof StudentSubmitAssignmentIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/professor': typeof ProfessorRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/professor/activity': typeof ProfessorActivityRoute
+  '/professor/assignments': typeof ProfessorAssignmentsRouteWithChildren
+  '/professor/settings': typeof ProfessorSettingsRoute
+  '/professor/submissions': typeof ProfessorSubmissionsRouteWithChildren
+  '/professor/verification': typeof ProfessorVerificationRoute
+  '/student/activity': typeof StudentActivityRoute
+  '/student/assignments': typeof StudentAssignmentsRouteWithChildren
+  '/student/settings': typeof StudentSettingsRoute
+  '/student/submissions': typeof StudentSubmissionsRouteWithChildren
+  '/professor/assignments/$id': typeof ProfessorAssignmentsIdRoute
+  '/professor/submissions/$id': typeof ProfessorSubmissionsIdRoute
+  '/student/assignments/$id': typeof StudentAssignmentsIdRoute
+  '/student/submissions/$id': typeof StudentSubmissionsIdRoute
+  '/student/submit/$assignmentId': typeof StudentSubmitAssignmentIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/professor': typeof ProfessorRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/professor/activity': typeof ProfessorActivityRoute
+  '/professor/assignments': typeof ProfessorAssignmentsRouteWithChildren
+  '/professor/settings': typeof ProfessorSettingsRoute
+  '/professor/submissions': typeof ProfessorSubmissionsRouteWithChildren
+  '/professor/verification': typeof ProfessorVerificationRoute
+  '/student/activity': typeof StudentActivityRoute
+  '/student/assignments': typeof StudentAssignmentsRouteWithChildren
+  '/student/settings': typeof StudentSettingsRoute
+  '/student/submissions': typeof StudentSubmissionsRouteWithChildren
+  '/professor/assignments/$id': typeof ProfessorAssignmentsIdRoute
+  '/professor/submissions/$id': typeof ProfessorSubmissionsIdRoute
+  '/student/assignments/$id': typeof StudentAssignmentsIdRoute
+  '/student/submissions/$id': typeof StudentSubmissionsIdRoute
+  '/student/submit/$assignmentId': typeof StudentSubmitAssignmentIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/professor'
+    | '/student'
+    | '/professor/activity'
+    | '/professor/assignments'
+    | '/professor/settings'
+    | '/professor/submissions'
+    | '/professor/verification'
+    | '/student/activity'
+    | '/student/assignments'
+    | '/student/settings'
+    | '/student/submissions'
+    | '/professor/assignments/$id'
+    | '/professor/submissions/$id'
+    | '/student/assignments/$id'
+    | '/student/submissions/$id'
+    | '/student/submit/$assignmentId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/professor'
+    | '/student'
+    | '/professor/activity'
+    | '/professor/assignments'
+    | '/professor/settings'
+    | '/professor/submissions'
+    | '/professor/verification'
+    | '/student/activity'
+    | '/student/assignments'
+    | '/student/settings'
+    | '/student/submissions'
+    | '/professor/assignments/$id'
+    | '/professor/submissions/$id'
+    | '/student/assignments/$id'
+    | '/student/submissions/$id'
+    | '/student/submit/$assignmentId'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/professor'
+    | '/student'
+    | '/professor/activity'
+    | '/professor/assignments'
+    | '/professor/settings'
+    | '/professor/submissions'
+    | '/professor/verification'
+    | '/student/activity'
+    | '/student/assignments'
+    | '/student/settings'
+    | '/student/submissions'
+    | '/professor/assignments/$id'
+    | '/professor/submissions/$id'
+    | '/student/assignments/$id'
+    | '/student/submissions/$id'
+    | '/student/submit/$assignmentId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  ProfessorRoute: typeof ProfessorRouteWithChildren
+  StudentRoute: typeof StudentRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +260,216 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/professor': {
+      id: '/professor'
+      path: '/professor'
+      fullPath: '/professor'
+      preLoaderRoute: typeof ProfessorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student': {
+      id: '/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/professor/activity': {
+      id: '/professor/activity'
+      path: '/activity'
+      fullPath: '/professor/activity'
+      preLoaderRoute: typeof ProfessorActivityRouteImport
+      parentRoute: typeof ProfessorRoute
+    }
+    '/professor/assignments': {
+      id: '/professor/assignments'
+      path: '/assignments'
+      fullPath: '/professor/assignments'
+      preLoaderRoute: typeof ProfessorAssignmentsRouteImport
+      parentRoute: typeof ProfessorRoute
+    }
+    '/professor/settings': {
+      id: '/professor/settings'
+      path: '/settings'
+      fullPath: '/professor/settings'
+      preLoaderRoute: typeof ProfessorSettingsRouteImport
+      parentRoute: typeof ProfessorRoute
+    }
+    '/professor/submissions': {
+      id: '/professor/submissions'
+      path: '/submissions'
+      fullPath: '/professor/submissions'
+      preLoaderRoute: typeof ProfessorSubmissionsRouteImport
+      parentRoute: typeof ProfessorRoute
+    }
+    '/professor/verification': {
+      id: '/professor/verification'
+      path: '/verification'
+      fullPath: '/professor/verification'
+      preLoaderRoute: typeof ProfessorVerificationRouteImport
+      parentRoute: typeof ProfessorRoute
+    }
+    '/student/activity': {
+      id: '/student/activity'
+      path: '/activity'
+      fullPath: '/student/activity'
+      preLoaderRoute: typeof StudentActivityRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/assignments': {
+      id: '/student/assignments'
+      path: '/assignments'
+      fullPath: '/student/assignments'
+      preLoaderRoute: typeof StudentAssignmentsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/settings': {
+      id: '/student/settings'
+      path: '/settings'
+      fullPath: '/student/settings'
+      preLoaderRoute: typeof StudentSettingsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/submissions': {
+      id: '/student/submissions'
+      path: '/submissions'
+      fullPath: '/student/submissions'
+      preLoaderRoute: typeof StudentSubmissionsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/professor/assignments/$id': {
+      id: '/professor/assignments/$id'
+      path: '/$id'
+      fullPath: '/professor/assignments/$id'
+      preLoaderRoute: typeof ProfessorAssignmentsIdRouteImport
+      parentRoute: typeof ProfessorAssignmentsRoute
+    }
+    '/professor/submissions/$id': {
+      id: '/professor/submissions/$id'
+      path: '/$id'
+      fullPath: '/professor/submissions/$id'
+      preLoaderRoute: typeof ProfessorSubmissionsIdRouteImport
+      parentRoute: typeof ProfessorSubmissionsRoute
+    }
+    '/student/assignments/$id': {
+      id: '/student/assignments/$id'
+      path: '/$id'
+      fullPath: '/student/assignments/$id'
+      preLoaderRoute: typeof StudentAssignmentsIdRouteImport
+      parentRoute: typeof StudentAssignmentsRoute
+    }
+    '/student/submissions/$id': {
+      id: '/student/submissions/$id'
+      path: '/$id'
+      fullPath: '/student/submissions/$id'
+      preLoaderRoute: typeof StudentSubmissionsIdRouteImport
+      parentRoute: typeof StudentSubmissionsRoute
+    }
+    '/student/submit/$assignmentId': {
+      id: '/student/submit/$assignmentId'
+      path: '/submit/$assignmentId'
+      fullPath: '/student/submit/$assignmentId'
+      preLoaderRoute: typeof StudentSubmitAssignmentIdRouteImport
+      parentRoute: typeof StudentRoute
+    }
   }
 }
 
+interface ProfessorAssignmentsRouteChildren {
+  ProfessorAssignmentsIdRoute: typeof ProfessorAssignmentsIdRoute
+}
+
+const ProfessorAssignmentsRouteChildren: ProfessorAssignmentsRouteChildren = {
+  ProfessorAssignmentsIdRoute: ProfessorAssignmentsIdRoute,
+}
+
+const ProfessorAssignmentsRouteWithChildren =
+  ProfessorAssignmentsRoute._addFileChildren(ProfessorAssignmentsRouteChildren)
+
+interface ProfessorSubmissionsRouteChildren {
+  ProfessorSubmissionsIdRoute: typeof ProfessorSubmissionsIdRoute
+}
+
+const ProfessorSubmissionsRouteChildren: ProfessorSubmissionsRouteChildren = {
+  ProfessorSubmissionsIdRoute: ProfessorSubmissionsIdRoute,
+}
+
+const ProfessorSubmissionsRouteWithChildren =
+  ProfessorSubmissionsRoute._addFileChildren(ProfessorSubmissionsRouteChildren)
+
+interface ProfessorRouteChildren {
+  ProfessorActivityRoute: typeof ProfessorActivityRoute
+  ProfessorAssignmentsRoute: typeof ProfessorAssignmentsRouteWithChildren
+  ProfessorSettingsRoute: typeof ProfessorSettingsRoute
+  ProfessorSubmissionsRoute: typeof ProfessorSubmissionsRouteWithChildren
+  ProfessorVerificationRoute: typeof ProfessorVerificationRoute
+}
+
+const ProfessorRouteChildren: ProfessorRouteChildren = {
+  ProfessorActivityRoute: ProfessorActivityRoute,
+  ProfessorAssignmentsRoute: ProfessorAssignmentsRouteWithChildren,
+  ProfessorSettingsRoute: ProfessorSettingsRoute,
+  ProfessorSubmissionsRoute: ProfessorSubmissionsRouteWithChildren,
+  ProfessorVerificationRoute: ProfessorVerificationRoute,
+}
+
+const ProfessorRouteWithChildren = ProfessorRoute._addFileChildren(
+  ProfessorRouteChildren,
+)
+
+interface StudentAssignmentsRouteChildren {
+  StudentAssignmentsIdRoute: typeof StudentAssignmentsIdRoute
+}
+
+const StudentAssignmentsRouteChildren: StudentAssignmentsRouteChildren = {
+  StudentAssignmentsIdRoute: StudentAssignmentsIdRoute,
+}
+
+const StudentAssignmentsRouteWithChildren =
+  StudentAssignmentsRoute._addFileChildren(StudentAssignmentsRouteChildren)
+
+interface StudentSubmissionsRouteChildren {
+  StudentSubmissionsIdRoute: typeof StudentSubmissionsIdRoute
+}
+
+const StudentSubmissionsRouteChildren: StudentSubmissionsRouteChildren = {
+  StudentSubmissionsIdRoute: StudentSubmissionsIdRoute,
+}
+
+const StudentSubmissionsRouteWithChildren =
+  StudentSubmissionsRoute._addFileChildren(StudentSubmissionsRouteChildren)
+
+interface StudentRouteChildren {
+  StudentActivityRoute: typeof StudentActivityRoute
+  StudentAssignmentsRoute: typeof StudentAssignmentsRouteWithChildren
+  StudentSettingsRoute: typeof StudentSettingsRoute
+  StudentSubmissionsRoute: typeof StudentSubmissionsRouteWithChildren
+  StudentSubmitAssignmentIdRoute: typeof StudentSubmitAssignmentIdRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentActivityRoute: StudentActivityRoute,
+  StudentAssignmentsRoute: StudentAssignmentsRouteWithChildren,
+  StudentSettingsRoute: StudentSettingsRoute,
+  StudentSubmissionsRoute: StudentSubmissionsRouteWithChildren,
+  StudentSubmitAssignmentIdRoute: StudentSubmitAssignmentIdRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
+  ProfessorRoute: ProfessorRouteWithChildren,
+  StudentRoute: StudentRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
