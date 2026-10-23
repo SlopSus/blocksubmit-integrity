@@ -1,1 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";import { AssignmentsPage } from "@/pages/assignments";export const Route=createFileRoute("/professor/assignments")({head:()=>({meta:[{title:"Professor assignments — BlockSubmit"},{name:"description",content:"Create and manage academic assignments."},{property:"og:title",content:"Professor assignments — BlockSubmit"},{property:"og:description",content:"Create and manage academic assignments."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Page});function Page(){return <AssignmentsPage role="professor"/>}
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/professor/assignments")({
+  component: Page,
+});
+
+function Page() {
+  return <Outlet />;
+}

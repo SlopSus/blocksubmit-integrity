@@ -4,7 +4,7 @@ export type AssignmentStatus = "ACTIVE" | "CLOSED" | "DRAFT";
 
 export interface User { id: string; name: string; email: string; role: UserRole; initials: string; department: string; }
 export interface BlockchainProof { transactionHash: string | null; blockNumber: number | null; timestamp: string | null; status: "CONFIRMED" | "PENDING" | "FAILED" | null; }
-export interface Assignment { id: string; title: string; code: string; description: string; deadline: string; createdAt: string; status: AssignmentStatus; submissionCount: number; requirements: string[]; submissionStatus?: IntegrityStatus | "NOT_SUBMITTED"; }
+export interface Assignment { id: string; title: string; code: string; description: string; deadline: string; createdAt: string; status: AssignmentStatus; submissionCount: number; requirements: string[]; submissionStatus?: IntegrityStatus | "NOT_SUBMITTED"; submissionId?: string | null; }
 export interface Submission { id: string; student: Pick<User, "id" | "name" | "email" | "initials">; assignmentId: string; assignmentTitle: string; documentName: string; fileSize: number; submittedAt: string; status: IntegrityStatus; trustedHash: string | null; currentHash: string | null; hashMatch: boolean | null; proof: BlockchainProof | null; }
 export interface VerificationResult { submission: Submission; result: Exclude<IntegrityStatus, "PENDING">; verifiedAt: string; }
 export interface DashboardStats { totalAssignments?: number; activeAssignments: number; totalSubmissions?: number; pending: number; verified: number; tampered?: number; completed?: number; }
