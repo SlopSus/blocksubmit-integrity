@@ -23,10 +23,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export function ActivityPage() {
+  const { user } = useAuth();
   const [items, setItems] = useState<Activity[]>([]);
   useEffect(() => {
-    activityService.list().then(setItems);
-  }, []);
+    activityService.list(user?.role).then(setItems);
+  }, [user?.role]);
   return (
     <div className="space-y-7">
       <PageHeading

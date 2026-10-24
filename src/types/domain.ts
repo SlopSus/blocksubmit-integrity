@@ -1,6 +1,6 @@
 export type UserRole = "professor" | "student";
 export type IntegrityStatus = "PENDING" | "VERIFIED" | "TAMPERED";
-export type AssignmentStatus = "ACTIVE" | "CLOSED" | "DRAFT";
+export type AssignmentStatus = "ACTIVE" | "CLOSED" | "ARCHIVED" | "DRAFT";
 
 export interface User { id: string; name: string; email: string; role: UserRole; initials: string; department: string; }
 export interface BlockchainProof { transactionHash: string | null; blockNumber: number | null; timestamp: string | null; status: "CONFIRMED" | "PENDING" | "FAILED" | null; }
@@ -12,4 +12,5 @@ export interface Activity { id: string; type: "assignment" | "submission" | "ver
 export interface LoginCredentials { email: string; password: string; }
 export interface AuthSession { token: string; user: User; }
 export interface CreateAssignmentInput { title: string; description: string; deadline: string; }
+export interface UpdateAssignmentInput { title?: string; description?: string; deadline?: string; status?: AssignmentStatus; requirements?: string[]; }
 export type SubmissionStep = "uploading" | "hashing" | "recording" | "confirming" | "complete";

@@ -3,6 +3,7 @@ import type {
   Assignment,
   AuthSession,
   CreateAssignmentInput,
+  UpdateAssignmentInput,
   LoginCredentials,
   Submission,
   SubmissionStep,
@@ -35,12 +36,33 @@ export const assignmentService = {
     serviceConfig.useMock
       ? mockRepository.getAssignments()
       : apiRequest<Assignment[]>("/assignments"),
+  get: (id: string): Promise<Assignment> =>
+    serviceConfig.useMock
+      ? mockRepository.getAssignments().then((list) => {
+          const found = list.find((a) => a.id === id);
+          if (!found) throw new Error("Assignment not found.");
+          return found;
+        })
+      : apiRequest<Assignment>(`/assignments/${id}`),
   create: (input: CreateAssignmentInput): Promise<Assignment> =>
     serviceConfig.useMock
       ? mockRepository.createAssignment(input)
       : apiRequest<Assignment>("/assignments", {
           method: "POST",
           body: JSON.stringify(input),
+        }),
+  update: (id: string, input: UpdateAssignmentInput): Promise<Assignment> =>
+    serviceConfig.useMock
+      ? mockRepository.updateAssignment(id, input)
+      : apiRequest<Assignment>(`/assignments/${id}`, {
+          method: "PUT",
+          body: JSON.stringify(input),
+        }),
+  delete: (id: string): Promise<{ message: string; id: string }> =>
+    serviceConfig.useMock
+      ? mockRepository.deleteAssignment(id)
+      : apiRequest<{ message: string; id: string }>(`/assignments/${id}`, {
+          method: "DELETE",
         }),
 };
 
@@ -84,9 +106,9 @@ export const submissionService = {
 };
 
 export const activityService = {
-  list: (): Promise<Activity[]> =>
+  list: (role?: UserRole): Promise<Activity[]> =>
     serviceConfig.useMock
-      ? mockRepository.getActivities()
+      ? mockRepository.getActivities(role)
       : apiRequest<Activity[]>("/activities"),
 };
 
@@ -98,3 +120,6 @@ export const verificationService = {
           method: "POST",
         }),
 };
+
+export * from "./integrityTest";
+

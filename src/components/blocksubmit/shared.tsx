@@ -9,7 +9,54 @@ export function EmptyState({title,detail}:{title:string;detail:string}){return <
 const short=(v:string|null)=>v?`${v.slice(0,10)}…${v.slice(-8)}`:"Not available";
 export function ProofPanel({proof}:{proof:BlockchainProof|null}){return <section className="panel rounded-lg p-5"><div className="mb-5 flex items-center justify-between"><div><p className="text-xs font-bold text-primary">BLOCKCHAIN PROOF</p><h3 className="mt-1 font-semibold">Immutable submission record</h3></div><Link2 className="size-5 text-primary"/></div><dl className="grid gap-4 sm:grid-cols-3"><Info label="Transaction" value={short(proof?.transactionHash??null)} mono/><Info label="Block" value={proof?.blockNumber?`#${proof.blockNumber}`:"Not available"}/><Info label="Status" value={proof?.status??"Not available"}/></dl></section>}
 export function Info({label,value,mono=false}:{label:string;value:string;mono?:boolean}){return <div><dt className="text-[11px] font-bold text-muted-foreground">{label.toUpperCase()}</dt><dd className={cn("mt-1 break-all text-sm",mono&&"font-mono text-xs text-primary")}>{value}</dd></div>}
-export function HashComparison({submission}:{submission:Submission}){return <section className="panel rounded-lg p-5"><div className="mb-5 flex items-center gap-3"><ShieldCheck className="size-5 text-primary"/><div><p className="text-xs font-bold text-primary">INTEGRITY COMPARISON</p><h3 className="font-semibold">Document fingerprints</h3></div></div><div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr]"><Hash label="Trusted hash" value={submission.trustedHash}/><div className="hidden items-center lg:flex"><span className={cn("rounded-full border px-3 py-1 text-xs font-bold",submission.hashMatch===true?"border-success/25 bg-success/10 text-success":submission.hashMatch===false?"border-destructive/25 bg-destructive/10 text-destructive":"border-border text-muted-foreground")}>{submission.hashMatch===null?"NOT CHECKED":submission.hashMatch?"MATCH":"MISMATCH"}</span></div><Hash label="Current hash" value={submission.currentHash}/></div></section>}
+export function computeHashMatchStatus(
+  trustedHash: string | null | undefined,
+  currentHash: string | null | undefined
+): "NOT_CHECKED" | "MATCH" | "MISMATCH" {
+  if (!currentHash) return "NOT_CHECKED";
+  if (
+    trustedHash &&
+    currentHash &&
+    trustedHash.trim().toLowerCase() === currentHash.trim().toLowerCase()
+  ) {
+    return "MATCH";
+  }
+  return "MISMATCH";
+}
+
+export function HashComparison({ submission }: { submission: Submission }) {
+  const matchStatus = computeHashMatchStatus(submission.trustedHash, submission.currentHash);
+
+  return (
+    <section className="panel rounded-lg p-5">
+      <div className="mb-5 flex items-center gap-3">
+        <ShieldCheck className="size-5 text-primary" />
+        <div>
+          <p className="text-xs font-bold text-primary">INTEGRITY COMPARISON</p>
+          <h3 className="font-semibold">Document fingerprints</h3>
+        </div>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr]">
+        <Hash label="Trusted hash" value={submission.trustedHash} />
+        <div className="hidden items-center lg:flex">
+          <span
+            className={cn(
+              "rounded-full border px-3 py-1 text-xs font-bold",
+              matchStatus === "MATCH"
+                ? "border-success/25 bg-success/10 text-success"
+                : matchStatus === "MISMATCH"
+                  ? "border-destructive/25 bg-destructive/10 text-destructive"
+                  : "border-border text-muted-foreground"
+            )}
+          >
+            {matchStatus === "NOT_CHECKED" ? "NOT CHECKED" : matchStatus}
+          </span>
+        </div>
+        <Hash label="Current hash" value={submission.currentHash} />
+      </div>
+    </section>
+  );
+}
 function Hash({label,value}:{label:string;value:string|null}){return <div className="rounded-md border bg-background/40 p-4"><p className="text-[11px] font-bold text-muted-foreground">{label.toUpperCase()}</p><p className="mt-2 break-all font-mono text-xs leading-5 text-foreground">{value??"Not available"}</p></div>}
 export function PageHeading({eyebrow,title,description,action}:{eyebrow?:string;title:string;description:string;action?:React.ReactNode}){return <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div>{eyebrow&&<p className="mb-2 text-xs font-bold text-primary">{eyebrow}</p>}<h1 className="text-2xl font-semibold sm:text-3xl">{title}</h1><p className="mt-2 max-w-2xl text-sm text-muted-foreground">{description}</p></div>{action}</header>}
 export function CopyButton({value}:{value:string|null}){return <Button variant="ghost" size="icon" disabled={!value} aria-label="Copy value" onClick={()=>value&&navigator.clipboard.writeText(value)}><Copy/></Button>}
